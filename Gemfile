@@ -45,3 +45,6 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'devise'
+
+gem 'fb_graph' 
+
