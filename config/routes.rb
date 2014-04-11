@@ -1,4 +1,7 @@
 ChallengeAccepted::Application.routes.draw do
+  get '/challenges/confirm', to: 'challenges#confirm'
+  get '/challenges/cancel', to: 'challenges#cancel'
+
   resources :challenges
 
   devise_for :users
@@ -10,9 +13,6 @@ ChallengeAccepted::Application.routes.draw do
     get "/signup" => "devise/registrations#new", as: :signup
     get "/pwreset" => "devise/passwords#new", as: :pwreset
   end
-
-  post '/challenges/confirm', to: 'challenges#confirm'
-  post '/challenges/cancel', to: 'challenges#cancel'
 
 
 

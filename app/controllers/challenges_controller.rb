@@ -37,7 +37,7 @@ class ChallengesController < ApplicationController
   end
 
   def confirm
-    @challenge = Challange.find_by_mw_id(params[:checkoutid])
+    @challenge = Challenge.find_by_mw_id(params[:checkoutid])
     @challenge.state = State.find_by_description "Proposed"
     @challenge.save
     redirect_to @challenge, notice: 'Payment received with success. Challange proposed!'
