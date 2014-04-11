@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  challenger_id: 1
+  challenged_id: 1
+  value: 
+  state_id: 1
+
+two:
+  challenger_id: 1
+  challenged_id: 1
+  value: 
+  state_id: 1

@@ -17,6 +17,7 @@ Devise.setup do |config|
 
   config.scoped_views = true
   config.default_scope = :user
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -94,7 +95,8 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "793f56ac19b75469b49a47c343bfd55b087fcfca1897a26d1bf2affeea13347dfef574ad66266e85690474a232843406e84b24ce28fe7d5f2ea2e488e34298ce"
+  # config.pepper = "3640685068047108841004ede1e7769ba4ac07149e8c3356b7f19b27724a4ab5aaa36872d429471bdc6caf4fd045c3739c9b96beef368d67a85a05e7111f9185"
+
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without

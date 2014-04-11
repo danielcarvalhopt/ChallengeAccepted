@@ -9,4 +9,6 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-ChallengeAccepted::Application.config.secret_key_base = '4e2e2d07a1881816300ab15e1b1a739b833325c2c91c8fe1995ba186e8d2ba160b04346a34e860ff1f208fc5f7d50aa7ad04acde77d7e9ccf542fd26dba108c3'
+
+ChallengeAccepted::Application.config.secret_key_base = 'fb285bf6bdcd0e3e0f3d499fe3eb21c4ea5cfdbc4e6b8a1dc5710b734d72d8665fe0b1aac363e487ad473c0eade21a8c116ea29d74acece198521e0af74a0eab'
+
