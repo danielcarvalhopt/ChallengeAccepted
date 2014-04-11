@@ -1,4 +1,6 @@
 ChallengeAccepted::Application.routes.draw do
+  resources :challenges
+
   devise_for :users
 
   devise_scope :user do
