@@ -7,6 +7,8 @@ class ChallengesController < ApplicationController
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
 
+
+
   # GET /challenges
   # GET /challenges.json
   def index
