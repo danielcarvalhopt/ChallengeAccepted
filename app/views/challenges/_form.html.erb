@@ -12,20 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :challenger_id %><br>
-    <%= f.number_field :challenger_id %>
-  </div>
-  <div class="field">
     <%= f.label :challenged_id %><br>
     <%= f.number_field :challenged_id %>
   </div>
   <div class="field">
-    <%= f.label :value %><br>
-    <%= f.text_field :value %>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label :state_id %><br>
-    <%= f.number_field :state_id %>
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
   </div>
   <div class="actions">
     <%= f.submit %>

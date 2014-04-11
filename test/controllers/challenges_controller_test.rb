@@ -18,7 +18,7 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test "should create challenge" do
     assert_difference('Challenge.count') do
-      post :create, challenge: { challenged_id: @challenge.challenged_id, challenger_id: @challenge.challenger_id, state_id: @challenge.state_id, value: @challenge.value }
+      post :create, challenge: { challenged_id: @challenge.challenged_id, challenger_id: @challenge.challenger_id, state_id: @challenge.state_id, value: @challenge.amount }
     end
 
     assert_redirected_to challenge_path(assigns(:challenge))
@@ -35,7 +35,7 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test "should update challenge" do
-    patch :update, id: @challenge, challenge: { challenged_id: @challenge.challenged_id, challenger_id: @challenge.challenger_id, state_id: @challenge.state_id, value: @challenge.value }
+    patch :update, id: @challenge, challenge: { challenged_id: @challenge.challenged_id, challenger_id: @challenge.challenger_id, state_id: @challenge.state_id, value: @challenge.amount }
     assert_redirected_to challenge_path(assigns(:challenge))
   end
 

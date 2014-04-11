@@ -11,6 +11,9 @@ ChallengeAccepted::Application.routes.draw do
     get "/pwreset" => "devise/passwords#new", as: :pwreset
   end
 
+  post '/challenges/confirm', to: 'challenges#confirm'
+  post '/challenges/cancel', to: 'challenges#cancel'
+
 
 
 end

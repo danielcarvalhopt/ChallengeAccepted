@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140411102858) do
+ActiveRecord::Schema.define(version: 20140411121611) do
 
   create_table "challenges", force: true do |t|
     t.integer  "challenger_id"
     t.integer  "challenged_id"
-    t.decimal  "value"
+    t.decimal  "amount"
     t.integer  "state_id"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mw_id"
   end
 
   create_table "states", force: true do |t|

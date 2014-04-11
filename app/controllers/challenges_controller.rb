@@ -1,5 +1,11 @@
+require 'net/http'
+require 'net/https'
+require 'active_support/core_ext/hash'
+require 'json'
+
 class ChallengesController < ApplicationController
   before_action :set_challenge, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /challenges
   # GET /challenges.json
@@ -21,19 +27,77 @@ class ChallengesController < ApplicationController
   def edit
   end
 
+  def cancel
+    @challenge = Challange.find_by_mw_id(params[:checkoutid])
+    @challenge.state = State.find_by_description "Cancelled"
+    @challenge.save
+    redirect_to @challenge, :flash => { :error => "Payment Failed!" }
+  end
+
+  def confirm
+    @challenge = Challange.find_by_mw_id(params[:checkoutid])
+    @challenge.state = State.find_by_description "Proposed"
+    @challenge.save
+    redirect_to @challenge, notice: 'Payment received with success. Challange proposed!'
+  end
+
   # POST /challenges
   # POST /challenges.json
   def create
     @challenge = Challenge.new(challenge_params)
+    @challenge.state = State.find_by_description "Unconfirmed"
+    @challenge.challenger = current_user
 
-    respond_to do |format|
-      if @challenge.save
-        format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @challenge }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @challenge.errors, status: :unprocessable_entity }
-      end
+    if @challenge.save
+      x = {
+            payment:
+            {
+              client: 
+              {
+                name: current_user.name, 
+                email: current_user.email, 
+              },
+              refundable: true,
+              amount: @challenge.amount,
+              currency: "EUR",
+              items:[{
+                ref: @challenge.id,
+                name: "Challange Accepted - Apostas",
+                descr:@challenge.description,
+                amount: @challenge.amount,
+                qt:1
+                }]
+              },
+              url_confirm: "http://localhost:3000/challenges/confirm",
+              url_cancel: "http://localhost:3000/challenges/cancel"
+            }
+
+      headers = {
+        'Content-Type' => 'application/json',
+        'Authorization' => 'WalletPT 9d07218b9c7f24d7b166a3877b57103939876667'
+      }
+
+      uri = URI.parse('https://services.wallet.codebits.eu/api/v2/checkout')
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      #data = {'payment' => x, 'amount' => 10}
+      request = Net::HTTP::Post.new(uri.path, initheader = headers)
+      request.body = x.to_json #data.to_json
+      response = http.request(request)
+
+      puts '----'
+      puts response.body
+      puts '----'
+
+      d = JSON.parse(response.body)
+      @challenge.mw_id = d['id']
+      @challenge.save
+
+      redirect_to d['url_redirect']
+
+    else
+      render action: 'new'
     end
   end
 
@@ -69,6 +133,6 @@ class ChallengesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def challenge_params
-      params.require(:challenge).permit(:challenger_id, :challenged_id, :value, :state_id)
+      params.require(:challenge).permit(:challenged_id, :amount, :description)
     end
 end
