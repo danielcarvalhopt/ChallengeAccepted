@@ -1,0 +1,68 @@
+.firsthome{
+  background-image: url("bg.jpg");
+  background-size: cover;
+  background-position:center center;
+  margin-top: 0;
+  border: 0;
+  padding: 2em 0;
+  height: 500px;
+}
+
+
+.secondhome{
+background: #709dc7;
+background-image: -webkit-gradient(radial,50% 50%,0,50% 50%,100,color-stop(0%,#709dc7),color-stop(100%,#4b84b9));
+background-image: -webkit-radial-gradient(#709dc7,#4b84b9);
+background-image: -moz-radial-gradient(#709dc7,#4b84b9);
+background-image: -o-radial-gradient(#709dc7,#4b84b9);
+background-image: radial-gradient(#709dc7,#4b84b9);
+  margin-top: 0;
+  border: 0;
+  padding: 2em 0;
+  color: #FFF;
+}
+
+.secondhome h1 {color: #FFF;}
+
+.secondhome * {padding: 10px}
+
+
+.secondhome img{
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 170px;
+}
+
+
+.smallhome{
+background: #cd6969;
+background-image: -webkit-gradient(radial,50% 50%,0,50% 50%,100,color-stop(0%,#cd6969),color-stop(100%,#9c3434));
+background-image: -webkit-radial-gradient(#cd6969,#9c3434);
+background-image: -moz-radial-gradient(#cd6969,#9c3434);
+background-image: -o-radial-gradient(#cd6969,#9c3434);
+background-image: radial-gradient(#cd6969,#9c3434);
+  margin-top: 0;
+  border: 0;
+  padding: 50px;
+}
+
+
+.ink-button{
+  margin: 0 3px 0 3px;
+  padding: .3em 1em;
+}
+
+
+.mybox{
+  padding: 150px;
+background: #37CEAF;
+height: 5%;
+width: 500px;
+margin: auto;
+margin-top: 10%;
+border-radius: 30px;
+color: #FFF;
+}
+
+

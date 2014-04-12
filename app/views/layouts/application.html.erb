@@ -8,14 +8,21 @@
 </head>
 <body>
 
-<nav class="ink-navigation">
-    <ul class="menu horizontal black">
-        <li><%= link_to 'My Challenges', challenges_my_challenges_path %></li>
-        <li><%= link_to 'Proposed Challenges', challenges_proposed_challenges_path %></li>
-        <li><%= link_to 'Other Challenges', challenges_other_challenges_path %></li>
-        <li><%= link_to 'New Challenge', new_challenge_path, :class => 'ink-button button-toolbar blue' %></li>
-    </ul>
-</nav>
+  <nav class="ink-navigation" >
+      <ul class="menu horizontal black" style="padding: 5px 0px 5px 10%">
+          <li style="background: #404040;"><%= link_to 'ChallengeAccepted', home_path %></li>
+          <% if user_signed_in? %>
+          <li><%= link_to 'My Challenges', challenges_my_challenges_path %></li>
+          <li><%= link_to 'Proposed Challenges', challenges_proposed_challenges_path %></li>
+          <li><%= link_to 'Other Challenges', challenges_other_challenges_path %></li>
+          <li><%= link_to 'New Challenge', new_challenge_path, :class => 'ink-button button-toolbar blue' %></li>
+          <li><%= link_to 'Logout', logout_path, :class => 'ink-button button-toolbar red' %></li>
+          <% else %>
+          <li><%= link_to 'Login', login_path %></li>
+          <li><%= link_to 'Register', signup_path %></li>
+          <% end %>
+      </ul>
+  </nav>
 <%= yield %>
 
 </body>
