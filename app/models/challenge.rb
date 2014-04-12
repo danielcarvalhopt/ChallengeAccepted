@@ -5,5 +5,6 @@ class Challenge < ActiveRecord::Base
 
 	validates :description, presence: true
   validates :amount, presence: true
-  validates :challenged, presence: true
+  validates :challenged_id, presence: true
+  validates :challenger_id, presence: true
 end

@@ -4,15 +4,23 @@ require 'active_support/core_ext/hash'
 require 'json'
 
 class ChallengesController < ApplicationController
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :complete, :fail, :pay]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :complete, :fail, :pay, :accept]
   before_filter :authenticate_user!
 
 
 
   # GET /challenges
   # GET /challenges.json
-  def index
-    @challenges = Challenge.all
+  def my_challenges
+    @challenges = current_user.challenged_challenges
+  end
+
+  def proposed_challenges
+    @challenges = current_user.challenger_challenges
+  end
+
+  def other_challenges
+    @challenges = Challenge.where.not(challenger_id: current_user.id, challenged_id: current_user.id)
   end
 
   # GET /challenges/1
@@ -65,6 +73,16 @@ class ChallengesController < ApplicationController
       redirect_to @challenge, notice: "Challenge failed! #{@challenge.amount} refunded to #{@challenge.challenger.email}"
     else
       redirect_to @challenge, notice: "Can't complete a challenge that is not in progress"
+    end
+  end
+
+  def accept
+    if @challenge.state.description.eql? "Proposed"
+      @challenge.state = State.find_by_description("In Progress")
+      @challenge.save
+      redirect_to @challenge, notice: "Challenge accepted!"
+    else
+      redirect_to @challenge, notice: "Can't accept a challenge that is not proposed"
     end
   end
 

@@ -8,6 +8,14 @@
 </head>
 <body>
 
+<nav class="ink-navigation">
+    <ul class="menu horizontal black">
+        <li><%= link_to 'My Challenges', challenges_my_challenges_path %></li>
+        <li><%= link_to 'Proposed Challenges', challenges_proposed_challenges_path %></li>
+        <li><%= link_to 'Other Challenges', challenges_other_challenges_path %></li>
+        <li><%= link_to 'New Challenge', new_challenge_path, :class => 'ink-button button-toolbar blue' %></li>
+    </ul>
+</nav>
 <%= yield %>
 
 </body>

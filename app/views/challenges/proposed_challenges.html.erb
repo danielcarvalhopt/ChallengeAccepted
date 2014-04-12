@@ -1,0 +1,33 @@
+<h1>Challenges</h1>
+
+<table class="ink-table alternating hover">
+  <thead>
+    <tr>
+      <th>Challenger</th>
+      <th>Challenged</th>
+      <th>Value</th>
+      <th>State</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @challenges.each do |challenge| %>
+      <tr>
+        <td><%= challenge.challenger.name %></td>
+        <td><%= challenge.challenged.name %></td>
+        <td><%= challenge.amount %>€</td>
+        <td><%= challenge.state.description %></td>
+        <td>
+          <% if challenge.state.description.eql? "Unconfirmed" %>
+            <%= link_to "Pay", "/challenges/#{challenge.id}/pay", :class => 'ink-button orange small' %>
+          <% elsif challenge.state.description.eql? "Proposed" %>
+            <%= link_to "Cancel", "/challenges/#{challenge.id}/cancel", :class => 'ink-button red small' %>
+          <% elsif challenge.state.description.eql? "In Progress" %>
+            <%= link_to "Complete", "/challenges/#{challenge.id}/complete", :class => 'ink-button green small' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,25 @@
+<h1>Other challenges</h1>
+
+<table class="ink-table alternating hover">
+  <thead>
+    <tr>
+      <th>Challenger</th>
+      <th>Challenged</th>
+      <th>Value</th>
+      <th>State</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @challenges.each do |challenge| %>
+      <tr>
+        <td><%= challenge.challenger.name %></td>
+        <td><%= challenge.challenged.name %></td>
+        <td><%= challenge.amount %>€</td>
+        <td><%= challenge.state.description %></td>
+        <td><%= link_to 'Show', challenge %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
