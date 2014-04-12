@@ -178,6 +178,13 @@ class ChallengesController < ApplicationController
           request = Net::HTTP::Post.new(uri.path, initheader = headers)
           request.body = x.to_json
           response = http.request(request)
+
+          puts '----'
+          puts request.body
+          puts '----'
+          puts response.body
+          puts '----'
+
     end
 
     def pay_redirect
@@ -209,31 +216,35 @@ class ChallengesController < ApplicationController
           'Authorization' => 'WalletPT 9d07218b9c7f24d7b166a3877b57103939876667'
         }
 
-        uri = URI.parse('https://services.wallet.codebits.eu/api/v2/checkout')
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        request = Net::HTTP::Post.new(uri.path, initheader = headers)
-        request.body = x.to_json #data.to_json
-        response = http.request(request)
+        if @challenge.mw_id.nil?
+          uri = URI.parse('https://services.wallet.codebits.eu/api/v2/checkout')
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          request = Net::HTTP::Post.new(uri.path, initheader = headers)
+          request.body = x.to_json #data.to_json
+          response = http.request(request)
 
-        puts '----'
-        puts response.body
-        puts '----'
+          puts '----'
+          puts response.body
+          puts '----'
 
-        d = JSON.parse(response.body)
-        
-        if d['code'].nil?  
-          @challenge.mw_id = d['id']
-          @challenge.save
-          redirect_to d['url_redirect']
+          d = JSON.parse(response.body)
+          
+          if d['code'].nil?  
+            @challenge.mw_id = d['id']
+            @challenge.save
+            redirect_to d['url_redirect']
+          else
+            redirect_to @challenge, notice: "Error: #{d['message']}"
+          end
         else
-          redirect_to @challenge, notice: "Error: #{d['message']}"
+          redirect_to "https://www.wallet.codebits.eu/checkout/#{@challenge.mw_id}"
         end
       end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def challenge_params
-      params.require(:challenge).permit(:challenged_id, :amount, :descriptio, :id)
+      params.require(:challenge).permit(:challenged_id, :amount, :description, :id)
     end
 end
