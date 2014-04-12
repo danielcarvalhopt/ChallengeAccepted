@@ -1,7 +1,12 @@
 ChallengeAccepted::Application.routes.draw do
   devise_for :users
   
-  
+  get '/challenges/confirm', to: 'challenges#confirm'
+  get '/challenges/cancel', to: 'challenges#cancel'
+  get '/challenges/:id/cancel', to: 'challenges#cancel'
+  get '/challenges/:id/complete', to: 'challenges#complete'  
+  get '/challenges/:id/fail', to: 'challenges#fail' 
+  get '/challenges/:id/pay', to: 'challenges#pay' 
 
   devise_scope :user do
     root to: "devise/registrations#new" # temporario
@@ -11,8 +16,7 @@ ChallengeAccepted::Application.routes.draw do
     get "/pwreset" => "devise/passwords#new", as: :pwreset
   end
 
-  get '/challenges/confirm', to: 'challenges#confirm'
-  get '/challenges/cancel', to: 'challenges#cancel'
+
 
   resources :users
   resources :challenges

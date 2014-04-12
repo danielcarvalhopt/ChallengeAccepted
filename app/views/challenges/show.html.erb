@@ -2,23 +2,34 @@
 
 <p>
   <strong>Challenger:</strong>
-  <%= @challenge.challenger_id %>
+  <%= @challenge.challenger.name %>
 </p>
 
 <p>
   <strong>Challenged:</strong>
-  <%= @challenge.challenged_id %>
+  <%= @challenge.challenged.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @challenge.description %>
 </p>
 
 <p>
   <strong>Value:</strong>
-  <%= @challenge.amount %>
+  <%= @challenge.amount %> €
 </p>
 
 <p>
   <strong>State:</strong>
-  <%= @challenge.state_id %>
+  <%= @challenge.state.description %>
+  <% if @challenge.state.description.eql? "Unconfirmed" %>
+		<%= link_to "Pay", "/challenges/#{@challenge.id}/pay", :class => 'ink-button orange' %>
+	<% elsif @challenge.state.description.eql? "Proposed" %>
+		<%= link_to "Cancel", "/challenges/#{@challenge.id}/cancel", :class => 'ink-button red' %>
+	<% end %>
 </p>
+
 
 <%= link_to 'Edit', edit_challenge_path(@challenge) %> |
 <%= link_to 'Back', challenges_path %>

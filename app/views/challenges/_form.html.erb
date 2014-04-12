@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :challenged_id %><br>
-    <%= f.number_field :challenged_id %>
+    <%= f.collection_select(:challenged_id, User.where.not(id: current_user.id), :id, :name) %>
   </div>
   <div class="field">
     <%= f.label :description %><br>
