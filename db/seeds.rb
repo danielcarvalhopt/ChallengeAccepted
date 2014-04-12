@@ -18,5 +18,6 @@ State.create(
 )
 
 User.create name:"Beatgodes", email: "cristiano.sousa126@gmail.com", password: "12345678"
-User.create name:"Insatisfeito", email: "dapcarvalho@gmail.com", password: "12345678"
+User.create name:"Insatisfeito", email: "mail@danielcarvalho.pt", password: "12345678"
+User.create name:"Rafael", email: "rsfalcon7@gmail.com", password: "12345678"
 

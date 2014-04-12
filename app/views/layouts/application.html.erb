@@ -8,21 +8,27 @@
 </head>
 <body>
 
-  <nav class="ink-navigation" >
-      <ul class="menu horizontal black" style="padding: 5px 0px 5px 10%">
-          <li style="background: #404040;"><%= link_to 'ChallengeAccepted', home_path %></li>
+<div id="topbar">
+    <nav class="ink-navigation ink-grid ie7">
+        <ul class="menu horizontal black push-left medium-push-center small-push-center tiny-push-center">
           <% if user_signed_in? %>
-          <li><%= link_to 'My Challenges', challenges_my_challenges_path %></li>
-          <li><%= link_to 'Proposed Challenges', challenges_proposed_challenges_path %></li>
-          <li><%= link_to 'Other Challenges', challenges_other_challenges_path %></li>
-          <li><%= link_to 'New Challenge', new_challenge_path, :class => 'ink-button button-toolbar blue' %></li>
-          <li><%= link_to 'Logout', logout_path, :class => 'ink-button button-toolbar red' %></li>
+            <li <%= is_active?(challenges_my_challenges_path) %>><%= link_to 'My Challenges', challenges_my_challenges_path %></li>
+            <li <%= is_active?(challenges_proposed_challenges_path) %>><%= link_to 'Proposed Challenges', challenges_proposed_challenges_path %></li>
+            <li <%= is_active?(challenges_other_challenges_path) %>><%= link_to 'Other Challenges', challenges_other_challenges_path %></li>
+            <li <%= is_active?(new_challenge_path) %>><%= link_to 'New Challenge', new_challenge_path, :class => 'ink-button button-toolbar blue' %></li>
           <% else %>
-          <li><%= link_to 'Login', login_path %></li>
-          <li><%= link_to 'Register', signup_path %></li>
-          <% end %>
-      </ul>
-  </nav>
+            <li <%= is_active?(login_path) %>><%= link_to 'Login', login_path %></li>
+            <li <%= is_active?(signup_path) %>><%= link_to 'Register', signup_path %></li>
+          <% end %> 
+        </ul>
+        <% if user_signed_in? %>
+        <ul class="menu horizontal black push-right hide-small hide-tiny hide-medium">
+          <li><%= link_to 'Logout', logout_path, :class => 'ink-button button-toolbar red' %></li>
+        </ul>
+        <% end %>
+    </nav>
+</div>
+
 <%= yield %>
 
 </body>

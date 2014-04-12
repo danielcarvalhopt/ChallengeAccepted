@@ -37,6 +37,8 @@ class ChallengesController < ApplicationController
   def edit
   end
 
+
+  # either payment failed or challenger backed out before the challenge was accepted
   def cancel
     if params[:checkoutid].nil?
       @challenge = Challenge.find(params[:id])
@@ -58,6 +60,7 @@ class ChallengesController < ApplicationController
     end
   end
 
+  # challenger successfully payed
   def confirm
     @challenge = Challenge.find_by_mw_id(params[:checkoutid])
     @challenge.state = State.find_by_description "Proposed"
@@ -65,6 +68,7 @@ class ChallengesController < ApplicationController
     redirect_to @challenge, notice: 'Payment received with success. Challange proposed!'
   end
 
+  # challenged person fails the challenge, refund money
   def fail
     if @challenge.state.description.eql? "In Progress" 
       refund
@@ -76,6 +80,7 @@ class ChallengesController < ApplicationController
     end
   end
 
+  # challenged person accepts the challenge
   def accept
     if @challenge.state.description.eql? "Proposed"
       @challenge.state = State.find_by_description("In Progress")
@@ -86,6 +91,7 @@ class ChallengesController < ApplicationController
     end
   end
 
+  # challenged person completes the challenge, transfer money
   def complete
     if @challenge.state.description.eql? "In Progress"
       x = {
@@ -98,13 +104,19 @@ class ChallengesController < ApplicationController
         'Authorization' => 'WalletPT 9d07218b9c7f24d7b166a3877b57103939876667'
       }
 
-      uri = URI.parse("https://services.wallet.codebits.eu/api/v2/users/#{CGI.escape('@challenge.challenged.email')}/transfer")
+      target_email = CGI.escape(@challenge.challenged.email)
+      uri = URI.parse("https://services.wallet.codebits.eu/api/v2/users/#{target_email}/transfer")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Post.new(uri.path, initheader = headers)
       request.body = x.to_json
       response = http.request(request)
+
+      puts '----'
+      puts uri.path
+      puts response.body
+      puts '----'      
 
       @challenge.state = State.find_by_description("Completed")
       @challenge.save
